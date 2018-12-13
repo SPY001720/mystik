@@ -1,10 +1,8 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
-const token = process.env.token
+const token = process.env.token;
 var prefix = ("!");
 var bot = new Discord.Client();
-
-const token = process.env.token
 
 bot.on('ready', () => {
     bot.user.setPresence({ game: { name: '[!Mystik] <🔱 𝓢𝓟𝓨 🔱>', type: 0}})
@@ -56,6 +54,6 @@ bot.on('guildMemberAdd', member => {
     
     });
 
-bot.login(token)
+bot.login(token);
 
 
