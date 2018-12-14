@@ -1,0 +1,11 @@
+{
+	"token": "token",
+	"servers": [
+		"513375308397674496",
+		"ID 2ND SERVER"
+	],
+	"roleName": "rainbow",
+	"colors": 12,
+	"speed": 60000,
+	"logging": true
+}
