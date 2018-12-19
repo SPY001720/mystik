@@ -12,17 +12,21 @@ bot.on('ready', () => {
     bot.user.setPresence({ game: { name: '[!Mystik] <🔱 𝓢𝓟𝓨 🔱>', type: 0}})
     console.log("Bot pret");
 });
-
-bot.on('guildMemberAdd', member => {
-    member.createDM().then(channel => {
-        return channel.send('Bienvenue sur MystikRP !' + member.displayName)
-    }).catch(console.error)
-});
     
-    bot.on('message', message => {
-        if (message.content === "!mention"){
-            message.reply("")
-        }
+db.defaults({ xp: []}).write
+
+    var mesgauthor = message.author.id;
+    if(message.author.bot)return;
+
+    if(!db.get("xp").find({user: msgauthor}).value()){
+        db.get("xp").push({user: msgauthor, xp: 10}).write();
+
+    }else{
+        var userxpdb = db.get('xp').filter({user: msgauthor}).find('xp').value();
+        console.log(userxpdb);
+        var userxp = Object.values(userxpdb)
+        console.log(userxp);
+    }
     
         if (message.content === prefix+ "Mystik"){
             var help_embed = new Discord.RichEmbed()
@@ -33,7 +37,19 @@ bot.on('guildMemberAdd', member => {
                 .addField("!staff", "Cette commande est utile si vous avez besoins de parler a un staff d'un certain grade , elle permet d'afficher la liste des staff de MystikRP ainsi que leur grade.")
             message.channel.sendEmbed(help_embed);
         }
-    
+ 
+        
+    if (message.content === prefix + "level"){
+        var xp = db.get("xp").filter({user: msgauthor}).find('xp').value()
+        var xpfinal = Object.values(xp);
+        var xp_embed = new Discord.RichEmbed()
+            .setColor('#AEEE00')     
+            .setTitle(`Nombre d'XP de ${message.author.username}`)
+            .setDescription("Voici votre nombre d'XP :")
+            .addField("XP :", `${xpfinal[1]} xp`)
+        message.channel.send({embed: xp_embed});
+    }
+
         if (message.content === prefix+ "infos"){
             var help_embed = new Discord.RichEmbed()
                 .setColor('#AEEE00')
@@ -56,6 +72,10 @@ bot.on('guildMemberAdd', member => {
             message.channel.sendEmbed(help_embed);
         }
     
+        bot.on('message', message => {
+            if (message.content === "!mention"){
+                message.reply("")
+            }
     });
 
-bot.login(token);
+    bot.login(token);
