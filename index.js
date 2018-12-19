@@ -2,6 +2,11 @@ const Discord = require('discord.js');
 const bot = new Discord.Client();
 const token = process.env.token;
 var prefix = ("!");
+const low= require ('lowdb')
+const FileSync = require('lowdb/adapters/FileSync')
+
+const adapter = new FileSync('database.json')
+const db = low(adapter);
 
 bot.on('ready', () => {
     bot.user.setPresence({ game: { name: '[!Mystik] <🔱 𝓢𝓟𝓨 🔱>', type: 0}})
